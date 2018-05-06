@@ -41,11 +41,13 @@
             targetElement.value = targetValue;
         }
 
+        document.addEventListener("DOMContentLoaded", encodeText);
+
     </script>    
 </head>
 <body>
     <p>
-        <textarea id="source" cols="60" rows="5" onkeyup="encodeText()"></textarea>
+        <textarea id="source" cols="60" rows="5" onkeyup="encodeText()">DobrÃ½ den</textarea>
     </p>
     <p>
         <textarea id="target" cols="60" rows="5"></textarea>
