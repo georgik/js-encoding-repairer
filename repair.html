@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Inspired by https://gist.github.com/xijo/d4bad3953f7b9979dd91 written by Xijo -->
+    <!-- Inspired by https://gist.github.com/xijo/d4bad3953f7b9979dd91 written by Xijo.
+    Some characters also from https://www.i18nqa.com/debug/utf8-debug.html -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script type="text/javascript">
         var REPLACEMENTS = {
@@ -9,7 +10,9 @@
           "â€š" : "‚",
           "â€ž" : "„",
           "â€¦" : "…",
+          "â€¡" : "‡",
           "Ë†"  : "ˆ",
+          "â€°" : "‰",
           "â€¹" : "‹",
           "â€˜" : "‘",
           "â€™" : "’",
@@ -21,12 +24,14 @@
           "â„¢" : "™",
           "â€º" : "›",
           "â€"  : "”",
+          // "â€"  : "†", --> conflictive with "”"
           "Å“"  : "œ",
           "Å’"  : "Œ",
           "Å¾"  : "ž",
           "Å¸"  : "Ÿ",
           "Å¡"  : "š",
           "Å½"  : "Ž",
+          "Å"   : "Š",
           "Â¡"  : "¡",
           "Â¢"  : "¢",
           "Â£"  : "£",
@@ -116,7 +121,7 @@
           "Ã¾"  : "þ",
           "Ã¿"  : "ÿ",
           "Ä›"  : "ě",
-          "Å™"  : "ř",
+          "Å™"  : "ř"
         }
 
         function encodeText() {
