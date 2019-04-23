@@ -125,27 +125,121 @@
           ""	: "" // null character
         }
 
+				// "Ã" is the error for many characters. Here are those grouped by languages. In Spanish and French, the expected most common character has been chosen, the rest being commented. Please be aware this characters might not be replaced properly.
+				var CONFLICTIVE_REPLACEMENTS = [
+					  { "Ã"   : "Ã" },
+					  { "Ã"   : "Ý" },
+					  { "Ã"   : "Á" },
+					  { "Ã"   : "Í" },
+					  { "Ã"   : "à" },
+					  { "Ã"   : "Ï" },
+					  { "Ã"   : "Ð" }
+				];
+
+				var choice = 0;
+
         function encodeText() {
             var sourceElement = document.getElementById("source");
             var targetElement = document.getElementById("target");
             var targetValue = sourceElement.value;
 
-            for (var key in REPLACEMENTS) {
+						for (var key in REPLACEMENTS) {
                 targetValue = targetValue.split(key).join(REPLACEMENTS[key]);
             }
+
+						for (i = 0; i < CONFLICTIVE_REPLACEMENTS.length; i++) {
+							if ( choice == i ) {
+								for (var key in CONFLICTIVE_REPLACEMENTS[i]) {
+									targetValue = targetValue.split(key).join(CONFLICTIVE_REPLACEMENTS[i][key]);
+								}
+							}
+						}
+
             targetElement.value = targetValue;
         }
+				document.addEventListener("DOMContentLoaded", encodeText);
 
-        document.addEventListener("DOMContentLoaded", encodeText);
+				function selector() {
+					function selectorOut() {
+						var radioValue = document.querySelector('input[name="choice"]:checked').value;
+						choice = radioValue;
+						encodeText();
+					}
+					document.getElementById("choice0").addEventListener("click", selectorOut);
+					document.getElementById("choice1").addEventListener("click", selectorOut);
+					document.getElementById("choice2").addEventListener("click", selectorOut);
+					document.getElementById("choice3").addEventListener("click", selectorOut);
+					document.getElementById("choice4").addEventListener("click", selectorOut);
+					document.getElementById("choice5").addEventListener("click", selectorOut);
+					document.getElementById("choice6").addEventListener("click", selectorOut);
+
+					function infoBoxToggle() {
+						var x = document.getElementById("info-box");
+						if (x.style.display === "none") {
+							x.style.display = "block";
+						} else {
+							x.style.display = "none";
+						}
+					}
+				}
+				document.addEventListener("DOMContentLoaded", selector);
 
     </script>
+
+		<style>
+			body { font-family: sans-serif; }
+		</style>
 </head>
 <body>
+
+
+
     <p>
         <textarea id="source" cols="60" rows="5" onkeyup="encodeText()">DobrÃ½ den</textarea>
     </p>
     <p>
         <textarea id="target" cols="60" rows="5"></textarea>
     </p>
+
+		<div id="info-box">
+			<p>"Ã" is the error returned for several characters. Choose which one you would like to replace "Ã" with. Please, keep in mind <i>all</i> "Ã" will be replaced with the same chosen character.</p>
+		</div>
+
+		<div>
+			<div>
+				<input type="radio" class="choice" id="choice0" name="choice" value="0" checked>
+				<label for="choice0">Keep as Ã (Portuguese, Vietnamese, Guarani <a href="https://en.wikipedia.org/wiki/%C3%83">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice1" name="choice" value="1">
+				<label for="choice1">Ý (Czech, Slovak, Icelandic, Kazakh <a href="https://en.wikipedia.org/wiki/%C3%9D">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice2" name="choice" value="2">
+				<label for="choice2">Á (Spanish, Portuguese, Czech, Dutch, Hungarian, Irish, Slovak <a href="https://en.wikipedia.org/wiki/%C3%81">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice3" name="choice" value="3">
+				<label for="choice3">Í (Spanish, Portuguese, Vietnamese, Hungarian, Czech, Slovak, Italian <a href="https://en.wikipedia.org/wiki/%C3%8D">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice4" name="choice" value="4">
+				<label for="choice4">à (French, Portuguese, Dutch, Catalan, Galician, Italian, Hungarian, Vietnamese, Welsh <a href="https://en.wikipedia.org/wiki/%C3%80">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice5" name="choice" value="5">
+				<label for="choice5">Ï (French, Dutch, Catalan, Galician, Welsh, English <a href="https://en.wikipedia.org/wiki/%C3%8F">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice6" name="choice" value="6">
+				<label for="choice6">Ð (Icelandic and Faroese)</label>
+			</div>
+		</div>
 </body>
 </html>
