@@ -1,56 +1,245 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Inspired by https://gist.github.com/xijo/d4bad3953f7b9979dd91 written by Xijo -->
+    <!-- Inspired by https://gist.github.com/xijo/d4bad3953f7b9979dd91 written by Xijo.
+    Some characters also from https://www.i18nqa.com/debug/utf8-debug.html -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script type="text/javascript">
         var REPLACEMENTS = {
-            "â‚¬" : "€", "â€š" : "‚", "â€ž" : "„", "â€¦" : "…", "Ë†"  : "ˆ",
-            "â€¹" : "‹", "â€˜" : "‘", "â€™" : "’", "â€œ" : "“", "â€"  : "”",
-            "â€¢" : "•", "â€“" : "–", "â€”" : "—", "Ëœ"  : "˜", "â„¢" : "™",
-            "â€º" : "›", "Å“"  : "œ", "Å’"  : "Œ", "Å¾"  : "ž", "Å¸"  : "Ÿ",
-            "Å¡"  : "š", "Å½"  : "Ž", "Â¡"  : "¡", "Â¢"  : "¢", "Â£"  : "£",
-            "Â¤"  : "¤", "Â¥"  : "¥", "Â¦"  : "¦", "Â§"  : "§", "Â¨"  : "¨",
-            "Â©"  : "©", "Âª"  : "ª", "Â«"  : "«", "Â¬"  : "¬", "Â®"  : "®",
-            "Â¯"  : "¯", "Â°"  : "°", "Â±"  : "±", "Â²"  : "²", "Â³"  : "³",
-            "Â´"  : "´", "Âµ"  : "µ", "Â¶"  : "¶", "Â·"  : "·", "Â¸"  : "¸",
-            "Â¹"  : "¹", "Âº"  : "º", "Â»"  : "»", "Â¼"  : "¼", "Â½"  : "½",
-            "Â¾"  : "¾", "Â¿"  : "¿", "Ã€"  : "À", "Ã‚"  : "Â", "Ãƒ"  : "Ã",
-            "Ã„"  : "Ä", "Ã…"  : "Å", "Ã†"  : "Æ", "Ã‡"  : "Ç", "Ãˆ"  : "È",
-            "Ã‰"  : "É", "ÃŠ"  : "Ê", "Ã‹"  : "Ë", "ÃŒ"  : "Ì", "ÃŽ"  : "Î",
-            "Ã‘"  : "Ñ", "Ã’"  : "Ò", "Ã“"  : "Ó", "Ã”"  : "Ô", "Ã•"  : "Õ",
-            "Ã–"  : "Ö", "Ã—"  : "×", "Ã˜"  : "Ø", "Ã™"  : "Ù", "Ãš"  : "Ú",
-            "Ã›"  : "Û", "Ãœ"  : "Ü", "Ãž"  : "Þ", "ÃŸ"  : "ß", "Ã¡"  : "á",
-            "Ã¢"  : "â", "Ã£"  : "ã", "Ã¤"  : "ä", "Ã¥"  : "å", "Ã¦"  : "æ",
-            "Ã§"  : "ç", "Ã¨"  : "è", "Ã©"  : "é", "Ãª"  : "ê", "Ã«"  : "ë",
-            "Ã¬"  : "ì", "Ã­"   : "í", "Ã®"  : "î", "Ã¯"  : "ï", "Ã°"  : "ð",
-            "Ã±"  : "ñ", "Ã²"  : "ò", "Ã³"  : "ó", "Ã´"  : "ô", "Ãµ"  : "õ",
-            "Ã¶"  : "ö", "Ã·"  : "÷", "Ã¸"  : "ø", "Ã¹"  : "ù", "Ãº"  : "ú",
-            "Ã»"  : "û", "Ã¼"  : "ü", "Ã½"  : "ý", "Ã¾"  : "þ", "Ã¿"  : "ÿ",
-            "Ä›"  : "ě", "Å™"  : "ř"
-          }
-        
+          "â‚¬" : "€",
+          "â€š" : "‚",
+          "â€ž" : "„",
+          "â€¦" : "…",
+          "â€¡" : "‡",
+          "Ë†"  : "ˆ",
+          "â€°" : "‰",
+          "â€¹" : "‹",
+          "â€˜" : "‘",
+          "â€™" : "’",
+          "â€œ" : "“",
+          "â€¢" : "•",
+          "â€“" : "–",
+          "â€”" : "—",
+          "Ëœ"  : "˜",
+          "â„¢" : "™",
+          "â€º" : "›",
+          "â€"  : "”",
+          // "â€"  : "†", --> conflictive with "”"
+          "Å“"  : "œ",
+          "Å’"  : "Œ",
+          "Å¾"  : "ž",
+          "Å¸"  : "Ÿ",
+          "Å¡"  : "š",
+          "Å½"  : "Ž",
+          "Å"   : "Š",
+          "Â¡"  : "¡",
+          "Â¢"  : "¢",
+          "Â£"  : "£",
+          "Â¤"  : "¤",
+          "Â¥"  : "¥",
+          "Â¦"  : "¦",
+          "Â§"  : "§",
+          "Â¨"  : "¨",
+          "Â©"  : "©",
+          "Âª"  : "ª",
+          "Â«"  : "«",
+          "Â¬"  : "¬",
+          "Â®"  : "®",
+          "Â¯"  : "¯",
+          "Â°"  : "°",
+          "Â±"  : "±",
+          "Â²"  : "²",
+          "Â³"  : "³",
+          "Â´"  : "´",
+          "Âµ"  : "µ",
+          "Â¶"  : "¶",
+          "Â·"  : "·",
+          "Â¸"  : "¸",
+          "Â¹"  : "¹",
+          "Âº"  : "º",
+          "Â»"  : "»",
+          "Â¼"  : "¼",
+          "Â½"  : "½",
+          "Â¾"  : "¾",
+          "Â¿"  : "¿",
+          "Ã€"  : "À",
+          "Ã‚"  : "Â",
+          "Ãƒ"  : "Ã",
+          "Ã„"  : "Ä",
+          "Ã…"  : "Å",
+          "Ã†"  : "Æ",
+          "Ã‡"  : "Ç",
+          "Ãˆ"  : "È",
+          "Ã‰"  : "É",
+          "ÃŠ"  : "Ê",
+          "Ã‹"  : "Ë",
+          "ÃŒ"  : "Ì",
+          "ÃŽ"  : "Î",
+          "Ã‘"  : "Ñ",
+          "Ã’"  : "Ò",
+          "Ã“"  : "Ó",
+          "Ã”"  : "Ô",
+          "Ã•"  : "Õ",
+          "Ã–"  : "Ö",
+          "Ã—"  : "×",
+          "Ã˜"  : "Ø",
+          "Ã™"  : "Ù",
+          "Ãš"  : "Ú",
+          "Ã›"  : "Û",
+          "Ãœ"  : "Ü",
+          "Ãž"  : "Þ",
+          "ÃŸ"  : "ß",
+          "Ã¡"  : "á",
+          "Ã¢"  : "â",
+          "Ã£"  : "ã",
+          "Ã¤"  : "ä",
+          "Ã¥"  : "å",
+          "Ã¦"  : "æ",
+          "Ã§"  : "ç",
+          "Ã¨"  : "è",
+          "Ã©"  : "é",
+          "Ãª"  : "ê",
+          "Ã«"  : "ë",
+          "Ã¬"  : "ì",
+          "Ã­"   : "í",
+          "Ã®"  : "î",
+          "Ã¯"  : "ï",
+          "Ã°"  : "ð",
+          "Ã±"  : "ñ",
+          "Ã²"  : "ò",
+          "Ã³"  : "ó",
+          "Ã´"  : "ô",
+          "Ãµ"  : "õ",
+          "Ã¶"  : "ö",
+          "Ã·"  : "÷",
+          "Ã¸"  : "ø",
+          "Ã¹"  : "ù",
+          "Ãº"  : "ú",
+          "Ã»"  : "û",
+          "Ã¼"  : "ü",
+          "Ã½"  : "ý",
+          "Ã¾"  : "þ",
+          "Ã¿"  : "ÿ",
+          "Ä›"  : "ě",
+          "Å™"  : "ř",
+          ""	: "" // null character
+        }
+
+				// "Ã" is the error for many characters. Here are those grouped by languages. In Spanish and French, the expected most common character has been chosen, the rest being commented. Please be aware this characters might not be replaced properly.
+				var CONFLICTIVE_REPLACEMENTS = [
+					  { "Ã"   : "Ã" },
+					  { "Ã"   : "Ý" },
+					  { "Ã"   : "Á" },
+					  { "Ã"   : "Í" },
+					  { "Ã"   : "à" },
+					  { "Ã"   : "Ï" },
+					  { "Ã"   : "Ð" }
+				];
+
+				var choice = 0;
+
         function encodeText() {
             var sourceElement = document.getElementById("source");
             var targetElement = document.getElementById("target");
             var targetValue = sourceElement.value;
 
-            for (var key in REPLACEMENTS) {
+						for (var key in REPLACEMENTS) {
                 targetValue = targetValue.split(key).join(REPLACEMENTS[key]);
             }
+
+						for (i = 0; i < CONFLICTIVE_REPLACEMENTS.length; i++) {
+							if ( choice == i ) {
+								for (var key in CONFLICTIVE_REPLACEMENTS[i]) {
+									targetValue = targetValue.split(key).join(CONFLICTIVE_REPLACEMENTS[i][key]);
+								}
+							}
+						}
+
             targetElement.value = targetValue;
         }
+				document.addEventListener("DOMContentLoaded", encodeText);
 
-        document.addEventListener("DOMContentLoaded", encodeText);
+				function selector() {
+					function selectorOut() {
+						var radioValue = document.querySelector('input[name="choice"]:checked').value;
+						choice = radioValue;
+						encodeText();
+					}
+					document.getElementById("choice0").addEventListener("click", selectorOut);
+					document.getElementById("choice1").addEventListener("click", selectorOut);
+					document.getElementById("choice2").addEventListener("click", selectorOut);
+					document.getElementById("choice3").addEventListener("click", selectorOut);
+					document.getElementById("choice4").addEventListener("click", selectorOut);
+					document.getElementById("choice5").addEventListener("click", selectorOut);
+					document.getElementById("choice6").addEventListener("click", selectorOut);
 
-    </script>    
+					function infoBoxToggle() {
+						var x = document.getElementById("info-box");
+						if (x.style.display === "none") {
+							x.style.display = "block";
+						} else {
+							x.style.display = "none";
+						}
+					}
+				}
+				document.addEventListener("DOMContentLoaded", selector);
+
+    </script>
+
+		<style>
+			body { font-family: sans-serif; }
+		</style>
 </head>
 <body>
+
+
+
     <p>
         <textarea id="source" cols="60" rows="5" onkeyup="encodeText()">DobrÃ½ den</textarea>
     </p>
     <p>
         <textarea id="target" cols="60" rows="5"></textarea>
     </p>
+
+		<div id="info-box">
+			<p>"Ã" is the error returned for several characters. Choose which one you would like to replace "Ã" with. Please, keep in mind <i>all</i> "Ã" will be replaced with the same chosen character.</p>
+		</div>
+
+		<div>
+			<div>
+				<input type="radio" class="choice" id="choice0" name="choice" value="0" checked>
+				<label for="choice0">Keep as Ã (Portuguese, Vietnamese, Guarani <a href="https://en.wikipedia.org/wiki/%C3%83">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice1" name="choice" value="1">
+				<label for="choice1">Ý (Czech, Slovak, Icelandic, Kazakh <a href="https://en.wikipedia.org/wiki/%C3%9D">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice2" name="choice" value="2">
+				<label for="choice2">Á (Spanish, Portuguese, Czech, Dutch, Hungarian, Irish, Slovak <a href="https://en.wikipedia.org/wiki/%C3%81">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice3" name="choice" value="3">
+				<label for="choice3">Í (Spanish, Portuguese, Vietnamese, Hungarian, Czech, Slovak, Italian <a href="https://en.wikipedia.org/wiki/%C3%8D">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice4" name="choice" value="4">
+				<label for="choice4">à (French, Portuguese, Dutch, Catalan, Galician, Italian, Hungarian, Vietnamese, Welsh <a href="https://en.wikipedia.org/wiki/%C3%80">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice5" name="choice" value="5">
+				<label for="choice5">Ï (French, Dutch, Catalan, Galician, Welsh, English <a href="https://en.wikipedia.org/wiki/%C3%8F">and more</a>)</label>
+			</div>
+
+			<div>
+				<input type="radio" class="choice" id="choice6" name="choice" value="6">
+				<label for="choice6">Ð (Icelandic and Faroese)</label>
+			</div>
+		</div>
 </body>
 </html>
